@@ -7,6 +7,8 @@ export default function Header() {
                 <p>InfluxIq Next</p>
             </div>
             <Link href='/about'><p>About</p></Link>
+            
+            <Link href='/adduser'><p>Add User</p></Link>
 
         </nav>
     )
