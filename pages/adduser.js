@@ -11,7 +11,7 @@ import {
     Switch,
     Select,
     MenuItem,
-    Button,
+    Button
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
