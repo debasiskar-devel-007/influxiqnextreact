@@ -11,7 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import Link from 'next/link';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -40,6 +40,7 @@ const useStyles = makeStyles({
 });
 
 const App = () => {
+  const router = useRouter()
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");

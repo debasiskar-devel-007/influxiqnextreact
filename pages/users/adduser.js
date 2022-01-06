@@ -13,8 +13,10 @@ import {
     MenuItem,
     Button
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
+import { useRouter } from 'next/router'
+import { render } from 'react-dom';
 
 const axios = require('axios')
 
@@ -25,8 +27,11 @@ const axios = require('axios')
 //         margin: theme.spacing(1, 0),
 //     },
 // }));
-export default function Adduser() {
+export default function Adduser(props) {
+    console.log("add user page",props);
     // const classes = useStyles();
+    const router = useRouter()
+     console.log("router111",router);
     const { register, handleSubmit, control, errors } = useForm();
 
     const onSubmit = (data) => {
@@ -50,9 +55,9 @@ export default function Adduser() {
     }
 
     return (
-        <div className="box">
+        <div >
             <h1>Add User</h1>
-            <div className="box-secondary">
+            <div >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {/* 1) TextField */}
                     <TextField
@@ -120,29 +125,7 @@ export default function Adduser() {
                         </RadioGroup>
                     </FormControl>
 
-                    {/* Select */}
-                    {/* <FormControl fullWidth className="selectbox">
-                        <InputLabel id="demo-simple-select-label">
-                            Select Your Course
-                        </InputLabel>
-                        <Controller
-                            render={(props) => (
-                                <Select value={props.value} onChange={props.onChange}>
-                                    <MenuItem value={''}>Choose your course</MenuItem>
-                                    <MenuItem value={'Web Development'}>Web Development</MenuItem>
-                                    <MenuItem value={"App Development"}>App Development</MenuItem>
-                                    <MenuItem value={"UI/UX"}>UI/UX</MenuItem>
-                                </Select>
-                            )}
-                            name="course"
-                            control={control}
-                            defaultValue=""
-                        />
-                    </FormControl> */}
-
-                    {/*  Switch */}
-
-
+                   
                     {/* Checkbox */}
                     <FormControlLabel
                         style={{ display: "block", marginBottom: 15 }}
