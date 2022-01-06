@@ -83,16 +83,14 @@ const App = () => {
   return (
     <div className="App">
       <h1 style={{ textAlign: 'center' }}>Users List</h1>
-      <Link href='/'><h3 style={{ textAlign: 'left', marginLeft: 10, cursor: 'pointer' }}>Go Home</h3></Link>
-      <Link href='/adduser'><h3 style={{ textAlign: 'right', marginRight: 10, cursor: 'pointer' }}>Add User</h3></Link>
-
-      <input
-        type="text"
-        placeholder="Search here"
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
-      />
+      <center>
+        <input
+          type="text"
+          placeholder="Search here"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        /></center>
       <br /><br />  <br /><br />
       <TableContainer component={Paper}>
         <Table className="tablecls" aria-label="customized table">
@@ -133,7 +131,7 @@ const App = () => {
                         {item.gender}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button variant="contained" color="primary" type="submit" onClick={() => Router.push('/edituserdata')} >Edit </Button>
+                        <Button variant="contained" color="primary" type="submit" onClick={() => Router.push('/users/' + item._id)} >Edit </Button>
                       </StyledTableCell>
                     </StyledTableRow>
                     {/* <div>

@@ -114,3 +114,16 @@
     flex-direction: column;
   }
 }
+
+.containerForm{
+margin : 15;
+padding:15;
+}
+
+.logo {
+  margin-left:100px;
+    background-color:aqua;
+}
+
+
+
