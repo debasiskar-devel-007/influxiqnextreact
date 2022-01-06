@@ -73,10 +73,9 @@ export default function Adduser(props) {
     console.log("[[", control);
 
     const onSubmit = (data) => {
+        // (data.first_name != null && data.first_name != "") ? setData(true) : setData(false)
 
-        (data.first_name != null && data.first_name != "") ? setData(true) : setData(false)
-
-            (data.first_name != null && data.first_name != "") ? (
+        (data.first_name != null && data.first_name != "") ? (
             axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/addnextjsuserdata', data)
                 .then(response => console.log("Submit success", response))
                 .catch(err => console.log("error", err))
@@ -94,7 +93,7 @@ export default function Adduser(props) {
                         label="First Name"
                         variant="outlined"
                         fullWidth
-                        required
+
                         name="firstName"
                         {...register('first_name')}
 
@@ -106,7 +105,7 @@ export default function Adduser(props) {
                         label="Last Name"
                         variant="outlined"
                         fullWidth
-                        required
+
                         name="lastName"
                         {...register('lastName')}
                     />
@@ -117,7 +116,7 @@ export default function Adduser(props) {
                         label="E-mail"
                         variant="outlined"
                         fullWidth
-                        required
+
                         name="email"
                         {...register('email')}
                     />
@@ -127,7 +126,7 @@ export default function Adduser(props) {
                         placeholder="Enter Your Phone Number"
                         label="Phone"
                         variant="outlined"
-                        required
+
                         fullWidth
                         name="phone"
                         {...register('phone')}
@@ -165,20 +164,16 @@ export default function Adduser(props) {
                     />
                     <br /><br />
                     <div style={{ alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}>
-                        <Button variant="contained" color="primary" type="submit" onClick={() => Router.push('/')}>{buttonText}</Button>
+                        <Button variant="contained" color="primary" type="submit" >submit</Button>
                     </div>
-
-                    {/* <div style={{ marginTop: 15, marginLeft: 100 }}>
-                        <Button onClick={handleClick} variant="contained" color="primary">Open simple snackbar</Button> */}
-                    <Snackbar
+                    {/* <Snackbar
                         open={data}
                         autoHideDuration={6000}
                         onClose={handleClose}
                         severity="success"
                         message="Thank You for Registering !"
-                    // action={action}
-                    />
-                    {/* </div> */}
+                    
+                    /> */}
                 </form>
             </div>
         </div>
