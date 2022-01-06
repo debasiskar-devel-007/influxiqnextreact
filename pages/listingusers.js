@@ -1,6 +1,6 @@
 
 const axios = require('axios')
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,10 +9,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import {
-  Button
-} from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import Link from 'next/link';
+import Router from 'next/router';
+
+
 const StyledTableCell = withStyles((theme) => ({
+
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
@@ -66,7 +69,7 @@ const App = () => {
           setProduct(response.data.results.res);
         })
         .catch(err => console.log("error", err))
-     
+
     } catch (e) {
       console.log(e);
     }
@@ -75,9 +78,13 @@ const App = () => {
   useEffect(() => {
     getProductData();
   }, []);
+
   return (
     <div className="App">
-      <h1>User List</h1>
+      <h1 style={{ textAlign: 'center' }}>Users List</h1>
+      <Link href='/'><h3 style={{ textAlign: 'left', marginLeft: 10, cursor: 'pointer' }}>Go Home</h3></Link>
+      <Link href='/adduser'><h3 style={{ textAlign: 'right', marginRight: 10, cursor: 'pointer' }}>Add User</h3></Link>
+
       <input
         type="text"
         placeholder="Search here"
@@ -85,15 +92,16 @@ const App = () => {
           setSearch(e.target.value);
         }}
       />
-
+      <br /><br />  <br /><br />
       <TableContainer component={Paper}>
         <Table className="tablecls" aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell >E-mail</StyledTableCell>
-              <StyledTableCell>Phone No.</StyledTableCell>
-              <StyledTableCell align="right">Gender</StyledTableCell>
+              <StyledTableCell align="center">Name</StyledTableCell>
+              <StyledTableCell align="center">E-mail</StyledTableCell>
+              <StyledTableCell align="center">Phone No.</StyledTableCell>
+              <StyledTableCell align="center">Gender</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -110,25 +118,28 @@ const App = () => {
               .map((item) => {
                 return (
                   <>
-                  <StyledTableRow key={item._id}>
-                    <StyledTableCell component="th" scope="row">
-                      {item.first_name +' '+item.lastName}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {item.email}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {item.phone}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {item.gender}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                  <div>
-                  <Button variant="contained" color="primary" type="submit">
+                    <StyledTableRow key={item._id}>
+                      <StyledTableCell component="th" scope="row" align="center">
+                        {item.first_name + ' ' + item.lastName}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {item.email}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {item.phone}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {item.gender}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button variant="contained" color="primary" type="submit" onClick={() => Router.push('/edituserdata')} >Edit </Button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                    {/* <div>
+                      <Button variant="contained" color="primary" type="submit">
                         Edit
-                    </Button>
-                  </div>
+                      </Button>
+                    </div> */}
                   </>
                 );
               })}

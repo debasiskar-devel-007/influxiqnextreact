@@ -28,18 +28,26 @@ const axios = require('axios')
 export default function Adduser() {
     // const classes = useStyles();
     const { register, handleSubmit, control, errors } = useForm();
-    
-    const onSubmit =
-        (data) => {
-            console.log(data);
-            if (data.first_name != null && data.first_name!="") {
-                axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/addnextjsuserdata', data)
-                    .then(response => console.log("success", response))
-                    .catch(err => console.log("error", err))
-            }else{
-                console.log("Form Not Valid");
-            }
-        }
+
+    const onSubmit = (data) => {
+
+        console.log(data, '++++++++++++++KLLLLLLLL');
+
+
+        // if (data.first_name != null && data.first_name != "") {
+        //     axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/addnextjsuserdata', data)
+        //         .then(response => console.log("success", response))
+        //         .catch(err => console.log("error", err))
+        // } else {
+        //     console.log("Form Not Valid");
+        // }
+
+        (data.first_name != null && data.first_name != "") ? (
+            axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/addnextjsuserdata', data)
+                .then(response => console.log("Submit success", response))
+                .catch(err => console.log("error", err))
+        ) : console.log("Form Not Valid ++++++++++LLLLLL");
+    }
 
     return (
         <div className="box">
@@ -145,6 +153,7 @@ export default function Adduser() {
                     <Button variant="contained" color="primary" type="submit">
                         create new account
                     </Button>
+
                 </form>
             </div>
         </div>
