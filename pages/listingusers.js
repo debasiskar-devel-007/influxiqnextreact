@@ -1,5 +1,6 @@
 
-const axios = require('axios')
+const axios = require('axios');
+import Link from 'next/link'
 import { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -12,6 +13,8 @@ import Paper from "@material-ui/core/Paper";
 import {
   Button
 } from "@material-ui/core";
+import { useRouter } from 'next/router'
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -37,6 +40,7 @@ const useStyles = makeStyles({
 });
 
 const App = () => {
+  const router = useRouter()
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
@@ -66,7 +70,7 @@ const App = () => {
           setProduct(response.data.results.res);
         })
         .catch(err => console.log("error", err))
-     
+
     } catch (e) {
       console.log(e);
     }
@@ -75,6 +79,11 @@ const App = () => {
   useEffect(() => {
     getProductData();
   }, []);
+
+  const handleClick = (data) => {
+    router.push(`/users/${data._id}`)
+  
+  };
   return (
     <div className="App">
       <h1>User List</h1>
@@ -110,25 +119,29 @@ const App = () => {
               .map((item) => {
                 return (
                   <>
-                  <StyledTableRow key={item._id}>
-                    <StyledTableCell component="th" scope="row">
-                      {item.first_name +' '+item.lastName}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {item.email}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {item.phone}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {item.gender}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                  <div>
-                  <Button variant="contained" color="primary" type="submit">
-                        Edit
-                    </Button>
-                  </div>
+                    <StyledTableRow key={item._id}>
+                      <StyledTableCell component="th" scope="row">
+                        {item.first_name + ' ' + item.lastName}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {item.email}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {item.phone}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {item.gender}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                    <div>
+                      <Button variant="contained" color="primary" type="button">
+                        <Link 
+                         href={`/users/${item._id}`}>
+                          Edit
+                        </Link>
+                      </Button>
+                      <Button variant="contained" color="primary" type="button" onClick={() => handleClick(item)}>test</Button>
+                    </div>
                   </>
                 );
               })}
