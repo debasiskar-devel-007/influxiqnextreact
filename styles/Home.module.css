@@ -124,6 +124,25 @@ padding:15;
   margin-left:100px;
     background-color:aqua;
 }
+.formBg{
+  background-color:white;
+}
 
+.header {
+  background-color:#f2d479;
+display:flex;
+justify-content:space-between;
+}
 
+.headerText{
+  background-color:teal;
+  font-size:35px;
+  color:white;
+  text-align:center;
+  font-weight:bold;
+  width: fit-content;
+  margin-top:-1px;
+  border-radius: 6px;
+  padding: 6px;
+}
 

@@ -13,7 +13,6 @@ import {
     MenuItem,
     Button
 } from "@material-ui/core";
-// import { makeStyles } from "@material-ui/core/styles";
 import Snackbar from '@mui/material/Snackbar';
 // import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
@@ -22,26 +21,32 @@ import { useRouter } from 'next/router'
 import { render } from 'react-dom';
 import Router from 'next/router';
 import styles from '../../styles/Home.module.css'
-
+import { switchUnstyledClasses } from '@mui/material';
+import Container from '@material-ui/core/Container';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { makeStyles } from '@material-ui/core';
 
 const axios = require('axios')
 
 
-// const useStyles = makeStyles((theme) => ({
-//     inputField: {
-//         width: "100%",
-//         margin: theme.spacing(1, 0),
-//     },
-// }));
+const useStyles = makeStyles({
+    btn: {
+        '&:hover': {
+            backgroundColor: 'green',
+        }
+    },
+
+});
+
 export default function Adduser(props) {
 
-    const [open, setOpen] = React.useState(false);
-    const [data, setData] = React.useState(false);
+    const styleX = useStyles()
+
+    const [openSnack, setOpenSnack] = React.useState(false);
 
     const handleClick = () => {
         // e.target.reset();
-
-        setOpen(true);
+        setOpenSnack(true);
 
     };
 
@@ -49,7 +54,16 @@ export default function Adduser(props) {
         if (reason === 'clickaway') {
             return;
         }
-        setOpen(false);
+        setOpenSnack(false);
+    };
+
+    const snackControl = (status) => {
+
+        (status === 'success') ? setOpenSnack(true) : setOpenSnack(false);
+        reset();
+        // return
+        setTimeout(() => { Router.push('/listingusers'); }, 3000)
+
     };
 
     console.log("add user page", Object.keys(props).length);
@@ -69,32 +83,41 @@ export default function Adduser(props) {
     }
     console.log("wertyui", formOptions.defaultValues)
 
-    const { register, handleSubmit, control, errors } = useForm(formOptions);
-    console.log("[[", control);
+    const { register, handleSubmit, control, errors, reset } = useForm(formOptions);
+    // console.log("[[", control);
 
     const onSubmit = (data) => {
-        // (data.first_name != null && data.first_name != "") ? setData(true) : setData(false)
 
         (data.first_name != null && data.first_name != "") ? (
             axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/addnextjsuserdata', data)
-                .then(response => console.log("Submit success", response))
+
+                // .then(response => console.log("Submit success", response))
+                .then((response) => {
+                    console.log("Submit success", response);
+                    console.log("CHECKDKKKKKK+++++", response.data.status);
+                    // (response.data.status === 'success') ? setOpenSnack(true) : setOpenSnack(false);
+                    snackControl(response.data.status);
+                })
                 .catch(err => console.log("error", err))
         ) : console.log("Form Not Valid ++++++++++LLLLLL");
+
     }
 
     return (
-        <div >
-            <h1 style={{ textAlign: 'center', marginTop: -20 }}>{headerText}</h1>
+        <Container className={styles.formBg} >
+            <center><p className={styles.headerText}>{headerText}</p></center>
             <div style={{ margin: 45 }}>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                     {/* 1) TextField */}
                     <TextField
                         placeholder="Enter Your First Name"
                         label="First Name"
                         variant="outlined"
+                        color="secondary"
                         fullWidth
-
+                        required
                         name="firstName"
+                        title='Enter First Name'
                         {...register('first_name')}
 
                     />
@@ -104,9 +127,11 @@ export default function Adduser(props) {
                         placeholder="Enter Your Last Name"
                         label="Last Name"
                         variant="outlined"
+                        color="secondary"
                         fullWidth
-
+                        required
                         name="lastName"
+                        title='Enter Last Name'
                         {...register('lastName')}
                     />
                     <br /><br />
@@ -115,9 +140,11 @@ export default function Adduser(props) {
                         placeholder="Enter Your E-mail Address"
                         label="E-mail"
                         variant="outlined"
+                        color="secondary"
                         fullWidth
-
+                        required
                         name="email"
+                        title='Enter Email Id'
                         {...register('email')}
                     />
                     <br /><br />
@@ -126,9 +153,11 @@ export default function Adduser(props) {
                         placeholder="Enter Your Phone Number"
                         label="Phone"
                         variant="outlined"
-
+                        color="secondary"
+                        required
                         fullWidth
                         name="phone"
+                        title='Enter Mobile Number'
                         {...register('phone')}
                     />
                     <br /><br />
@@ -162,20 +191,26 @@ export default function Adduser(props) {
                         control={<Checkbox name="tnc" {...register('tnc')} />}
                         label="I aggree all terms and conditions"
                     />
+                    <br />
+                    <center>
+                        <Button variant="outlined" color="secondary" onClick={() => reset()} endIcon={<CancelIcon />}>Reset</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Button variant="contained" color="primary" type="submit" className={styleX.btn}>submit</Button>
+
+                    </center>
                     <br /><br />
-                    <div style={{ alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}>
-                        <Button variant="contained" color="primary" type="submit" >submit</Button>
+                    <div>
+
+
+                        <Snackbar
+                            open={openSnack}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                            severity="success"
+                            message="Thank You for Registering !"
+                        />
                     </div>
-                    {/* <Snackbar
-                        open={data}
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                        severity="success"
-                        message="Thank You for Registering !"
-                    
-                    /> */}
                 </form>
             </div>
-        </div>
+        </Container>
     )
 }
