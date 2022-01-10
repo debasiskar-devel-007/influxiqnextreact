@@ -6,7 +6,7 @@ export default function Header() {
 
     <div className={styles.header}>
       <div>
-        <h2 style={{ marginLeft: 100 }}>InfluxIQ Next</h2>
+        <Link href='/'><h2 style={{ marginLeft: 100, cursor: 'pointer', }}>InfluxIQ Next</h2></Link>
       </div>
       <nav style={{ display: 'flex', padding: 10, justifyContent: 'flex-end', alignItems: 'flex-end' }}>
         <Link href='/'><p style={{ fontWeight: 'bold', cursor: 'pointer', marginLeft: 20 }}>Home</p></Link>

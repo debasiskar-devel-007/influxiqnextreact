@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         <div>
             <p style={{ textAlign: 'center', fontWeight: 'bold', color: 'blue' }}>
-                © Copyright 2021 InfluxiQ Next.js Project || All Rights Reserved
+                © Copyright 2021-2022 InfluxiQ Next.js Project || All Rights Reserved
             </p>
         </div>
     )
