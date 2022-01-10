@@ -86,12 +86,8 @@ const App = () => {
     <>
       <Head>
         <title>InfluxIQ | User Listing</title>
-        <meta
-          key="og:image"
-          name="og:image"
-          content="https://all-frontend-assets.s3.amazonaws.com/transcendentpagan/assets/images/og_image.jpg"
-        />
-        <meta property="og:image" content="https://all-frontend-assets.s3.amazonaws.com/transcendentpagan/assets/images/og_image.jpg" key="ogimage" />
+        <meta key="og:image" name="og:image" content="https://all-frontend-assets.s3.amazonaws.com/transcendentpagan/assets/images/og_image.jpg" />
+        {/* <meta property="og:image" content="https://all-frontend-assets.s3.amazonaws.com/transcendentpagan/assets/images/og_image.jpg" key="ogimage" /> */}
         <meta property="og:url" content="https://next.influxhostserver.com/" key="ogurl" />
         <meta property="og:site_name" content="Influiq" key="ogsitename" />
         <meta property="og:title" content="Next React" key="ogtitle" />
