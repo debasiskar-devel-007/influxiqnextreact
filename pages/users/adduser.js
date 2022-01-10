@@ -85,7 +85,9 @@ export default function Adduser(props) {
 
     const { register, handleSubmit, control, errors, reset } = useForm(formOptions);
     // console.log("[[", control);
-
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
     const onSubmit = (data) => {
 
         (data.first_name != null && data.first_name != "") ? (
@@ -165,7 +167,8 @@ export default function Adduser(props) {
                     {/* Radio Buttons */}
                     <FormControl>
                         <FormLabel>Choose Your Gender</FormLabel>
-                        <RadioGroup row name="gender">
+                        <RadioGroup row name="gender"
+                            defaultValue={(Object.keys(props).length != 0 && props.dataset[0].gender) ? props.dataset[0].gender : ""}>
                             <FormControlLabel
                                 value="female"
                                 control={<Radio {...register('gender')} />}
@@ -188,7 +191,7 @@ export default function Adduser(props) {
                     {/* Checkbox */}
                     <FormControlLabel
                         style={{ display: "block", marginBottom: 15 }}
-                        control={<Checkbox name="tnc" {...register('tnc')} />}
+                        control={<Checkbox defaultChecked={(Object.keys(props).length != 0 && props.dataset[0].tnc) ? props.dataset[0].tnc : false} name="tnc" {...register('tnc')} />}
                         label="I aggree all terms and conditions"
                     />
                     <br />
@@ -203,7 +206,7 @@ export default function Adduser(props) {
 
                         <Snackbar
                             open={openSnack}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={handleClose}
                             severity="success"
                             message="Thank You for Registering !"
