@@ -63,7 +63,7 @@ export default function Adduser(props) {
         (status === 'success') ? setOpenSnack(true) : setOpenSnack(false);
         reset();
         // return
-        setTimeout(() => { Router.push('/listingusers'); }, 3000)
+        setTimeout(() => { Router.push('/listingusers'); }, 2000)
 
     };
 

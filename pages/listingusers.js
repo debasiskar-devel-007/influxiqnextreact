@@ -1,4 +1,3 @@
-
 const axios = require('axios')
 import { useEffect, useState, } from "react";
 import Head from "next/head";
@@ -41,47 +40,20 @@ const useStyles = makeStyles({
   },
 });
 
-const App = () => {
+
+
+const App = ({articles}) => {
   const router = useRouter()
   const classes = useStyles();
-  const [product, setProduct] = useState([]);
+  // const [product, setProduct] = useState([]);
+  // const [product, setProduct] = useState({dataPass});
   const [search, setSearch] = useState("");
 
-  const getProductData = async () => {
-    try {
-      // const data = await axios.post(
-      //   "https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/getnextuserslist", data
-      // );
-      // console.log(data.data);
-
-      var data = {
-        "db": "data_pece",
-        "condition": {
-          "limit": 10,
-          "skip": 0
-        },
-        "sort": {
-          "type": "desc",
-          "field": "_id"
-        }
-      }
-      const dataset = axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/getnextuserslist', data)
-        .then((response) => {
-          console.log("success444", response);
-          // listingDataSource = response.data.results.res;
-          setProduct(response.data.results.res);
-        })
-        .catch(err => console.log("error", err))
-
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
-    getProductData();
+    // getProductData();
+    // getServerSideProps();
   }, []);
-
+console.log("KKLLLL+++++", articles.results.res);
   return (
     <>
       <Head>
@@ -111,31 +83,9 @@ const App = () => {
             }}
           /></center>
         <br /><br />  <br /><br />
-        <TableContainer component={Paper}>
-          <Table className="tablecls" aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="center">Name</StyledTableCell>
-                <StyledTableCell align="center">E-mail</StyledTableCell>
-                <StyledTableCell align="center">Phone No.</StyledTableCell>
-                <StyledTableCell align="center">Gender</StyledTableCell>
-                <StyledTableCell align="center">Action</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {product
-                .filter((item) => {
-                  if (search == "") {
-                    return item;
-                  } else if (
-                    item.first_name.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return item;
-                  }
-                })
-                .map((item) => {
-                  return (
-                    <>
+      {articles.results.res.map((item,index)=>{
+        return (
+          <>
                       <StyledTableRow key={item._id}>
                         <StyledTableCell component="th" scope="row" align="center">
                           {item.first_name + ' ' + item.lastName}
@@ -153,20 +103,39 @@ const App = () => {
                           <Button variant="contained" color="primary" type="submit" onClick={() => Router.push('/users/' + item._id)} >Edit </Button>
                         </StyledTableCell>
                       </StyledTableRow>
-                      {/* <div>
-                      <Button variant="contained" color="primary" type="submit">
-                        Edit
-                      </Button>
-                    </div> */}
                     </>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        )}
+      )}
       </div>
     </>
   );
 };
+
+
+export async function getServerSideProps() {
+  const res = await fetch('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/getnextuserslist',{
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+                "db": "data_pece",
+                "condition": {
+                  "limit": 10,
+                  "skip": 0
+                },
+                "sort": {
+                  "type": "desc",
+                  "field": "_id"
+                }
+              })
+      })
+      const data = await res.json();
+     
+      return {
+        props: {
+          articles: data,
+        }
+      }
+};
+
 
 export default App;
