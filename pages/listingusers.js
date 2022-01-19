@@ -13,7 +13,8 @@ import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
-
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const StyledTableCell = withStyles((theme) => ({
 
@@ -46,14 +47,16 @@ const App = ({articles}) => {
   const router = useRouter()
   const classes = useStyles();
   // const [product, setProduct] = useState([]);
-  // const [product, setProduct] = useState({dataPass});
+  const [product, setProduct] = useState(articles.results.res);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     // getProductData();
     // getServerSideProps();
   }, []);
+
 console.log("KKLLLL+++++", articles.results.res);
+// setProduct(articles.results.res);
   return (
     <>
       <Head>
@@ -74,6 +77,10 @@ console.log("KKLLLL+++++", articles.results.res);
           width={110}
           height={100}
         /> */}
+{/* <Box sx={{ width: '100%' }}>
+      <LinearProgress />
+    </Box> */}
+
         <center>
           <input
             type="text"
@@ -83,7 +90,29 @@ console.log("KKLLLL+++++", articles.results.res);
             }}
           /></center>
         <br /><br />  <br /><br />
-      {articles.results.res.map((item,index)=>{
+        <TableContainer component={Paper}>
+          <Table className="tablecls" aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">E-mail</StyledTableCell>
+                <StyledTableCell align="center">Phone No.</StyledTableCell>
+                <StyledTableCell align="center">Gender</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+      {product
+      .filter((item) => {
+        if (search == "") {
+          return item;
+        } else if (
+          item.first_name.toLowerCase().includes(search.toLowerCase())
+        ) {
+          return item;
+        }
+      })
+      .map((item,index)=>{
         return (
           <>
                       <StyledTableRow key={item._id}>
@@ -106,6 +135,9 @@ console.log("KKLLLL+++++", articles.results.res);
                     </>
         )}
       )}
+       </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </>
   );
