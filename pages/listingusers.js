@@ -43,16 +43,10 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
 });
-<<<<<<< HEAD
-export default function App( props )
-{
-  console.log("todos",props);
-=======
 
 
 
 const App = ({ articles }) => {
->>>>>>> 873db1dcba138c8640af4c5ca9229ad08c175ccb
   const router = useRouter()
   const classes = useStyles();
 
@@ -193,15 +187,6 @@ const App = ({ articles }) => {
   );
 };
 
-<<<<<<< HEAD
-// export default App;
-
-export const getStaticProps = async () => {
-  // const res = await fetch("https://jsonplaceholder.typicode.com/todos");
-  var todos=[];
-  try {
-    var data = {
-=======
 
 export async function getServerSideProps() {
 
@@ -211,7 +196,6 @@ export async function getServerSideProps() {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
->>>>>>> 873db1dcba138c8640af4c5ca9229ad08c175ccb
       "db": "data_pece",
       "condition": {
         "limit": 10,
@@ -221,60 +205,6 @@ export async function getServerSideProps() {
         "type": "desc",
         "field": "_id"
       }
-<<<<<<< HEAD
-    }
-    const dataset = axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/getnextuserslist', data)
-    .then((response) => {
-      console.log("success444", response);
-      todos =  response.data.results.res;
-    //   return {
-    //     props: {
-    //         data:  todos
-    //     }
-    // }
-      // listingDataSource = response.data.results.res;
-      // setProduct(response.data.results.res);
-    })
-      return {
-        props: {
-            data:  todos
-        }
-    }
-   
-    // const result = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-    // const data = result.data;
-    
-} catch (error) {
-    console.log(error);
-}
-
-  // const todos
-  // var data = {
-  //   "db": "data_pece",
-  //   "condition": {
-  //     "limit": 10,
-  //     "skip": 0
-  //   },
-  //   "sort": {
-  //     "type": "desc",
-  //     "field": "_id"
-  //   }
-  // }
-  // const dataset = axios.post('https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/getnextuserslist', data)
-  //   .then((response) => {
-  //     console.log("success444", response);
-  //     todos =  response.data.results.res;
-      
-  //     // listingDataSource = response.data.results.res;
-  //     // setProduct(response.data.results.res);
-  //   })
-  //   return {
-  //     props: {
-  //       todos,
-  //     },
-  //   };
-};
-=======
     })
   })
   const data = await res.json();
@@ -285,7 +215,4 @@ export async function getServerSideProps() {
     }
   }
 };
-
-
 export default App;
->>>>>>> 873db1dcba138c8640af4c5ca9229ad08c175ccb
