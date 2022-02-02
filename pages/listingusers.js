@@ -42,17 +42,22 @@ const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
+
 });
 
 
 
-const App = ({ articles }) => {
+const App = ({ articles, listCount }) => {
   const router = useRouter()
   const classes = useStyles();
 
   const [page, setPage] = useState(1);
   const [product, setProduct] = useState(articles.results.res);
   const [search, setSearch] = useState("");
+  var totalCount = listCount.count;
+
+  var pageCount = Math.ceil(totalCount / 10);
+  var lastCount = listCount.count;
 
   useEffect(() => {
 
@@ -74,7 +79,7 @@ const App = ({ articles }) => {
         "db": "data_pece",
         "condition": {
           "limit": limit,
-          "skip": skip - 1
+          "skip": 10 * (skip - 1)
         },
         "sort": {
           "type": "desc",
@@ -91,7 +96,9 @@ const App = ({ articles }) => {
   // console.log("Product+++++++", product.length);
 
   // setProduct(articles.results.res);
-  console.log("PAGEVALUE++++++++", page)
+  // console.log("PAGEVALUE++++++++", page)
+
+  console.log("TOTALLLLLCOUNT++++++", pageCount);
   return (
     <>
       <Head>
@@ -104,16 +111,15 @@ const App = ({ articles }) => {
       </Head>
 
       <div className="App">
-        <center>
-          <h2>Rick and Morty With Pagination</h2>
+        <cent>
           <Pagination
-            style={{ alignItems: 'center', alignSelf: 'center' }}
-            count={10}
+            style={{ marginLeft: 15 }}
+            count={pageCount}
             color="secondary"
             page={page}
             onChange={handlePaginationChange}
-          /></center>
-        <Typography style={{ textAlign: 'center' }}>Data From : {10 * (page - 1) + '---' + (10 * page)}</Typography>
+          /></cent>
+        <Typography style={{ textAlign: 'center' }}>Data Show From :  {10 * (page - 1) + '  To  ' + ((10 * page < totalCount) ? (10 * page) : totalCount)}  Of  {totalCount} </Typography>
         <br />
 
         <h1 style={{ textAlign: 'center' }}>Users List</h1>
@@ -209,9 +215,28 @@ export async function getServerSideProps() {
   })
   const data = await res.json();
 
+
+  const countList = await fetch(`https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api3/getnextuserslist-count`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      "condition": {
+        "limit": 10,
+        "skip": 0
+      },
+      "sort": {
+        "type": "desc",
+        "field": "_id"
+      },
+      "searchcondition": {}
+    })
+  })
+  const listDataCount = await countList.json();
+  // console.log("++++++++KKKKKKK", listDataCount);
   return {
     props: {
       articles: data,
+      listCount: listDataCount,
     }
   }
 };
